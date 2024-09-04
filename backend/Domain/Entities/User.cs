@@ -1,14 +1,11 @@
 ﻿using Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Entities
 {
-    public class User : IEntity
+    public class User : IdentityUser<Guid>, IEntity
     {
-        public Guid Id { get; set; }
-        public string? UserName { get; set; }
-        public string? Email { get; set; }
-        public string? PasswordHash { get; set; }
-        public DateTime CreatedDate {  get; set; } = DateTime.UtcNow;
-        public DateTime UpdatedDate {  get; set; } = DateTime.UtcNow;
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedDate { get; set; } = DateTime.UtcNow;
     }
 }

@@ -1,8 +1,9 @@
 ﻿using Domain.Enums;
+using Domain.Interfaces;
 
 namespace Domain.Entities
 {
-    public class Task
+    public class TaskToDo : IEntity
     {
         public Guid Id { get; set; }
         public string? Title { get; set; }
