@@ -1,20 +1,10 @@
-using Domain.Data;
-using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Extensions;
+using Infrastructure.ServiceExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-
-builder.Services.AddDbContext<TaskAppDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddIdentity<User, Role>()
-            .AddEntityFrameworkStores<TaskAppDbContext>()
-            .AddDefaultTokenProviders();
-
-builder.Services.AddSwaggerGen();
+builder.Services.AddScopedService(); 
+builder.Services.ServiceCollections(builder.Configuration);
 
 var app = builder.Build();
 
@@ -26,6 +16,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
