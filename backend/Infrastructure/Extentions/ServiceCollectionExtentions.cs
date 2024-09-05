@@ -1,4 +1,6 @@
 ﻿using Domain.Data;
+using FluentValidation.AspNetCore;
+using Infrastructure.MappingProfilies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +13,10 @@ namespace Infrastructure.Extentions
         {
             services.AddControllers();
             services.AddSwaggerGen();
+            services.AddLogging();
+            services.AddFluentValidationAutoValidation();
+            services.AddFluentValidationClientsideAdapters();
+            services.AddAutoMapper(typeof(TaskToDoProfile));
 
             services.AddDbContext<TaskAppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
