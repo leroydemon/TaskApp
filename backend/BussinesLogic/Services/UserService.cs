@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BussinesLogic.EntityDtos;
+using BussinesLogic.Interfaces;
 using Domain.Entities;
 using Domain.Filters;
 using Domain.Interfaces;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BussinesLogic.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IRepository<User> _repos;
         private readonly IMapper _mapper;
@@ -42,7 +43,7 @@ namespace BussinesLogic.Services
             return _mapper.Map<UserDto>(addedUser);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             _logger.LogInformation("Attempting to delete user with ID {UserId}", id);
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BussinesLogic.EntityDtos;
+using BussinesLogic.Interfaces;
 using Domain.Entities;
 using Domain.Filters;
 using Domain.Interfaces;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BussinesLogic.Services
 {
-    public class TaskToDoService
+    public class TaskToDoService : ITaskToDoService
     {
         private readonly IRepository<TaskToDo> _repos;
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace BussinesLogic.Services
             _logger = logger;
         }
 
-        public async Task<TaskToDoDto> FindByIdAsync(Guid id)
+        public async Task<TaskToDoDto> GetByIdAsync(Guid id)
         {
             _logger.LogInformation("Searching for task with ID {TaskId}", id);
 
@@ -42,7 +43,7 @@ namespace BussinesLogic.Services
             return _mapper.Map<TaskToDoDto>(addedTask);
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             _logger.LogInformation("Attempting to delete task with ID {TaskId}", id);
 

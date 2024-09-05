@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BussinesLogic.EntityDtos;
 
 namespace BussinesLogic.Interfaces
 {
-    internal interface IAccountService
+    public interface IAccountService
     {
+        Task<bool> Register(RegisterDto request);
+        Task<string> Login(LoginDto input);
+        Task<bool> LogOut(Guid userId);
     }
 }
