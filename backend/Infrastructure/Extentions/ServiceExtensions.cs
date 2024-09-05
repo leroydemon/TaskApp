@@ -2,7 +2,7 @@
 using Domain.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.ServiceExtensions
+namespace Infrastructure.Extentions
 {
     public static class ServiceExtentions
     {
