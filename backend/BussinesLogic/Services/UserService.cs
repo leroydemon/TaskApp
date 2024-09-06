@@ -32,17 +32,6 @@ namespace BussinesLogic.Services
             return _mapper.Map<UserDto>(user);
         }
 
-        public async Task<UserDto> AddAsync(UserDto userDto)
-        {
-            _logger.LogInformation("Adding new user");
-
-            var user = _mapper.Map<User>(userDto);
-            var addedUser = await _repos.AddAsync(user);
-
-            _logger.LogInformation("User with ID {UserId} added", addedUser.Id);
-            return _mapper.Map<UserDto>(addedUser);
-        }
-
         public async Task RemoveAsync(Guid id)
         {
             _logger.LogInformation("Attempting to delete user with ID {UserId}", id);

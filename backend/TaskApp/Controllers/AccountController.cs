@@ -1,5 +1,6 @@
 ﻿using BussinesLogic.EntityDtos;
 using BussinesLogic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TaskApp.Controllers
@@ -20,17 +21,14 @@ namespace TaskApp.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto request)
         {
-            _logger.LogInformation("Attempting to register a new user.");
-
             var result = await _accountService.Register(request);
-            if (result)
+
+            if (result.Success)
             {
-                _logger.LogInformation("User registered successfully.");
-                return Ok(new { Message = "Registration successful" });
+                return Ok(new { message = result.Message });
             }
 
-            _logger.LogWarning("User registration failed.");
-            return BadRequest(new { Message = "Registration failed" });
+            return BadRequest(new { message = result.Message });
         }
 
         [HttpPost("login")]
@@ -50,7 +48,8 @@ namespace TaskApp.Controllers
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> LogOut([FromQuery] Guid userId)  // Обычно лучше использовать [FromQuery] для ID
+        [Authorize]
+        public async Task<IActionResult> LogOut([FromQuery] Guid userId)
         {
             _logger.LogInformation("Attempting to log out user with ID {UserId}.", userId);
 
@@ -58,12 +57,11 @@ namespace TaskApp.Controllers
             if (result)
             {
                 _logger.LogInformation("User logged out successfully.");
-                return NoContent();  // Используем NoContent для успешного логаута
+                return NoContent();
             }
 
             _logger.LogWarning("Logout failed for user with ID {UserId}.", userId);
             return BadRequest(new { Message = "Logout failed" });
         }
     }
-
 }
