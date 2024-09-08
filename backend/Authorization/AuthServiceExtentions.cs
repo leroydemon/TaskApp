@@ -18,7 +18,7 @@ namespace Authorization
                 .GetSection("AuthOptions").Bind(authOptions);
 
             var key = Encoding
-                .ASCII
+                .UTF8
                 .GetBytes(authOptions.Secret);
 
             services
@@ -34,8 +34,7 @@ namespace Authorization
                 }).AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.UseSecurityTokenValidators = true;
+                    options.SaveToken = true;   
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -44,7 +43,8 @@ namespace Authorization
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = authOptions.Issuer,
                         ValidAudience = authOptions.Audience,
-                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ClockSkew = TimeSpan.Zero,
                     };
                 });
             return services;

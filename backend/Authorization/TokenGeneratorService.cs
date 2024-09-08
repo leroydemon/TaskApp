@@ -24,7 +24,7 @@ namespace Authorization
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
-            if (user.Email == "Admin")
+            if (user.Email == "admin@example.com" || user.UserName == "Admin")
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
             }

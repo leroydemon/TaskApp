@@ -1,5 +1,9 @@
 {
-  "ExpandedNodes": [],
-  "SelectedNode": "\\TaskApp.sln",
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\TaskApp"
+  ],
+  "SelectedNode": "\\backend\\TaskApp\\TaskApp.sln",
   "PreviewInSolutionExplorer": false
 }

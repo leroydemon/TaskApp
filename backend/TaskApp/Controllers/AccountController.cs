@@ -1,5 +1,6 @@
 ﻿using BussinesLogic.EntityDtos;
 using BussinesLogic.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -48,7 +49,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpPost("logout")]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> LogOut([FromQuery] Guid userId)
         {
             _logger.LogInformation("Attempting to log out user with ID {UserId}.", userId);

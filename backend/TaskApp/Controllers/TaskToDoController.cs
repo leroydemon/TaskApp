@@ -1,7 +1,7 @@
 ﻿using BussinesLogic.EntityDtos;
 using BussinesLogic.Interfaces;
-using BussinesLogic.Services;
 using Domain.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpGet("search")]
-        [Authorize(Roles = "User")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<ActionResult<IEnumerable<UserDto>>> SearchAsync([FromQuery] TaskToDoFilter filter)
         {
             var users = await _taskService.SearchAsync(filter);
@@ -28,7 +28,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<IActionResult> AddAsync([FromBody] TaskToDoDto user)
         {
             await _taskService.AddAsync(user);
@@ -37,7 +37,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpPut]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<IActionResult> UpdateAsync([FromBody] TaskToDoDto user)
         {
             await _taskService.UpdateAsync(user);
@@ -46,7 +46,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpDelete]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<IActionResult> DeleteAsync(Guid userId)
         {
             await _taskService.RemoveAsync(userId);
@@ -55,7 +55,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "User")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var user = await _taskService.GetByIdAsync(id);

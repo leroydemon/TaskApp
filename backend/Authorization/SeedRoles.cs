@@ -34,7 +34,7 @@ namespace Authorization
                     // Create admin user
                     var powerUser = new User
                     {
-                        UserName = "admin",
+                        UserName = "Admin",
                         Email = "admin@example.com"
                     };
 
