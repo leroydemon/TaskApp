@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using BussinesLogic.EntityDtos;
 using Domain.Entities;
+using Domain.Filters;
 using Domain.Interfaces;
+using Domain.Specification;
 using Microsoft.Extensions.Logging;
 
 namespace BussinesLogic.Services
@@ -10,9 +12,9 @@ namespace BussinesLogic.Services
     {
         private readonly IRepository<TaskToDo> _repos;
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
+        private readonly ILogger<TaskToDoService> _logger;
 
-        public TaskToDoService(IRepository<TaskToDo> repos, IMapper mapper, ILogger logger)
+        public TaskToDoService(IRepository<TaskToDo> repos, IMapper mapper, ILogger<TaskToDoService> logger)
         {
             _repos = repos;
             _mapper = mapper;
@@ -21,34 +23,54 @@ namespace BussinesLogic.Services
 
         public async Task<TaskToDoDto> FindByIdAsync(Guid id)
         {
-            var user = await _repos.GetByIdAsync(id);
+            _logger.LogInformation("Searching for task with ID {TaskId}", id);
 
-            return _mapper.Map<TaskToDoDto>(user);
+            var task = await _repos.GetByIdAsync(id);
+
+            _logger.LogInformation("Found task with ID {TaskId}", id);
+            return _mapper.Map<TaskToDoDto>(task);
         }
 
         public async Task<TaskToDoDto> AddAsync(TaskToDoDto taskDto)
         {
-            var task = _mapper.Map<TaskToDo>(taskDto);
+            _logger.LogInformation("Adding a new task: {TaskTitle}", taskDto.Title);
 
-            return _mapper.Map<TaskToDoDto>(await _repos.AddAsync(task));
+            var task = _mapper.Map<TaskToDo>(taskDto);
+            var addedTask = await _repos.AddAsync(task);
+
+            _logger.LogInformation("Task with ID {TaskId} has been added", addedTask.Id);
+            return _mapper.Map<TaskToDoDto>(addedTask);
         }
 
         public async Task DeleteAsync(Guid id)
         {
+            _logger.LogInformation("Attempting to delete task with ID {TaskId}", id);
+
             var task = await _repos.GetByIdAsync(id);
+
             await _repos.DeleteAsync(task);
+            _logger.LogInformation("Task with ID {TaskId} has been deleted", id);
         }
 
         public async Task<TaskToDoDto> UpdateAsync(TaskToDoDto taskDto)
         {
+            _logger.LogInformation("Updating task with ID {TaskId}", taskDto.Id);
+
             var updatedTask = await _repos.UpdateAsync(_mapper.Map<TaskToDo>(taskDto));
 
+            _logger.LogInformation("Task with ID {TaskId} has been updated", updatedTask.Id);
             return _mapper.Map<TaskToDoDto>(updatedTask);
         }
 
-        public async Task<IEnumerable<TaskToDoDto>> SearchAsync()
+        public async Task<IEnumerable<TaskToDoDto>> SearchAsync(TaskToDoFilter filter)
         {
-            return new List<TaskToDoDto>();
+            _logger.LogInformation("Searching tasks with filter: {Filter}", filter);
+
+            var spec = new TaskToDoSpecification(filter);
+            var tasks = await _repos.ListAsync(spec);
+
+            _logger.LogInformation("Found {TaskCount} tasks matching filter", tasks.Count());
+            return _mapper.Map<List<TaskToDoDto>>(tasks);
         }
     }
 }
