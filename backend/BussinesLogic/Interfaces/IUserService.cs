@@ -9,6 +9,5 @@ namespace BussinesLogic.Interfaces
         Task RemoveAsync(Guid userId);
         Task<UserDto> GetByIdAsync(Guid userId);
         Task<UserDto> UpdateAsync(UserDto user);
-        Task<UserDto> AddAsync(UserDto user);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using BussinesLogic.EntityDtos;
+using BussinesLogic.Results;
 
 namespace BussinesLogic.Interfaces
 {
     public interface IAccountService
     {
-        Task<bool> Register(RegisterDto request);
+        Task<RegistrationResult> Register(RegisterDto request);
         Task<string> Login(LoginDto input);
         Task<bool> LogOut(Guid userId);
     }

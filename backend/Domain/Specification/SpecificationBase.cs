@@ -53,6 +53,10 @@ namespace Domain.Specialization
 
         protected void ApplyPaging(int skip, int take)
         {
+            if (skip < 1)
+            {
+                skip = 1;
+            }
             Skip = (skip - 1) * take;
             Take = take;
             IsPagingEnabled = true;

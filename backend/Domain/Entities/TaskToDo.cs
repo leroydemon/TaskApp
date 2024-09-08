@@ -6,6 +6,7 @@ namespace Domain.Entities
     public class TaskToDo : IEntity
     {
         public Guid Id { get; set; }
+        public Guid UserId { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public DateTime DueDate { get; set; }

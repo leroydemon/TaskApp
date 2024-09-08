@@ -1,6 +1,7 @@
 ﻿using BussinesLogic.EntityDtos;
 using BussinesLogic.Interfaces;
 using Domain.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TaskApp.Controllers
@@ -16,6 +17,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpGet("search")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<UserDto>>> SearchAsync([FromQuery] UserFilter filter)
         {
             var users = await _userService.SearchAsync(filter);
@@ -23,15 +25,8 @@ namespace TaskApp.Controllers
             return Ok(users);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddAsync([FromBody] UserDto user)
-        {
-            await _userService.AddAsync(user);
-
-            return Ok(user);
-        }
-
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAsync([FromBody] UserDto user)
         {
             await _userService.UpdateAsync(user);
@@ -40,6 +35,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAsync(Guid userId)
         {
             await _userService.RemoveAsync(userId);
@@ -48,6 +44,7 @@ namespace TaskApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetByIdAsync(Guid id)
         {
             var user = await _userService.GetByIdAsync(id);

@@ -1,4 +1,5 @@
-﻿using Domain.Data;
+﻿using AutoMapper;
+using Domain.Data;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.MappingProfilies;
