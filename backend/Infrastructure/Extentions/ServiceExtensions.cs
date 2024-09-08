@@ -1,4 +1,6 @@
-﻿using Domain.Interfaces;
+﻿using BussinesLogic.Interfaces;
+using BussinesLogic.Services;
+using Domain.Interfaces;
 using Domain.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +32,10 @@ namespace Infrastructure.Extentions
                     }
                 }
             }
+
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITaskToDoService, TaskToDoService>();
 
             return services;
         }
