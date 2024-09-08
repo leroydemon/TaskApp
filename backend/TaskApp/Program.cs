@@ -26,6 +26,7 @@ using (var scope = app.Services.CreateScope())
 app.UseMiddleware<ErrorHandlingService>();
 app.UseHttpsRedirection();
 
+
 app.UseAuthentication();
 app.UseAuthorization();
 
