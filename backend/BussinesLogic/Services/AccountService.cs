@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Authorization;
 using BussinesLogic.Results;
+using Authorization.Interfaces;
 
 namespace BussinesLogic.Services
 {
@@ -14,11 +15,11 @@ namespace BussinesLogic.Services
         private readonly UserManager<User> _userManager;
         private readonly ILogger<AccountService> _logger;
         private readonly IRepository<User> _repos;
-        private readonly TokenGeneratorService _tokenGenerator;
+        private readonly ITokenGeneratorService _tokenGenerator;
         private readonly SignInManager<User> _signInManager;
 
         public AccountService(
-            TokenGeneratorService tokenGenerator,
+            ITokenGeneratorService tokenGenerator,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<AccountService> logger,
