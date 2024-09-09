@@ -1,4 +1,5 @@
 ﻿using Authorization;
+using Authorization.Interfaces;
 using BussinesLogic.Interfaces;
 using BussinesLogic.Services;
 using Domain.Interfaces;
@@ -34,7 +35,7 @@ namespace Infrastructure.Extentions
                 }
             }
 
-            services.AddScoped<TokenGeneratorService>();
+            services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITaskToDoService, TaskToDoService>();
