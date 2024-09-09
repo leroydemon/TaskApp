@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Authorization.Interfaces;
+using Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Authorization
 {
-    public class TokenGeneratorService
+    public class TokenGeneratorService : ITokenGeneratorService
     {
         private readonly AuthOptions _authSettings;
 
