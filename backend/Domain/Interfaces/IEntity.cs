@@ -1,5 +1,6 @@
 ﻿namespace Domain.Interfaces
 {
+    // Interface representing a basic entity with identification and timestamps
     public interface IEntity
     {
         public Guid Id { get; set; }

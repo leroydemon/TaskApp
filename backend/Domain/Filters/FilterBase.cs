@@ -2,6 +2,7 @@
 
 namespace Domain.Filters
 {
+    // Base class for filtering with ordering and pagination
     public class FilterBase<TOrderBy>
     {
         public TOrderBy OrderBy { get; set; }

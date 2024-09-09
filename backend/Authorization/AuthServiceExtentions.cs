@@ -11,6 +11,7 @@ namespace Authorization
 {
     public static class AuthServiceExtentions
     {
+        // Configures authentication and authorization services.
         public static IServiceCollection AddAuthorizationService(this IServiceCollection services, IConfiguration configuration)
         {
             var authOptions = new AuthOptions();
@@ -47,8 +48,10 @@ namespace Authorization
                         ClockSkew = TimeSpan.Zero,
                     };
                 });
+
             return services;
         }
+        // Adds custom authorization policies.
         public static IServiceCollection AddCustomAuthorization(this IServiceCollection services)
         {
             services.AddAuthorization(options =>
@@ -57,8 +60,10 @@ namespace Authorization
                 .AddPolicy("Admin", policy => policy
                 .RequireRole("Admin"));
             });
+
             return services;
         }
+        // Configures identity services with custom settings.
         public static IServiceCollection AddCustomIdentity(this IServiceCollection services)
         {
             services

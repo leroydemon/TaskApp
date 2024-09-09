@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Data
 {
+    //Db settings
     public partial class TaskAppDbContext : IdentityDbContext<User, Role, Guid>
     {
         public TaskAppDbContext(DbContextOptions<TaskAppDbContext> options) : base(options) { }

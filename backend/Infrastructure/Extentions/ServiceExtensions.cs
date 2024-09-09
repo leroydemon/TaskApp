@@ -35,6 +35,7 @@ namespace Infrastructure.Extentions
                 }
             }
 
+            //Add services
             services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();

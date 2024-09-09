@@ -1,5 +1,6 @@
 ﻿namespace Domain.Interfaces
 {
+    // Interface representing a repository for performing CRUD operations on entities
     public interface IRepository<T> where T : class, IEntity
     {
         Task<IEnumerable<T>> ListAsync(ISpecification<T> spec);

@@ -25,6 +25,8 @@ namespace Authorization
                 new Claim(JwtRegisteredClaimNames.Sub, user.Email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
+
+            // Add role claim based on user email or username
             if (user.Email == "admin@example.com" || user.UserName == "Admin")
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
@@ -33,9 +35,12 @@ namespace Authorization
             {
                 claims.Add(new Claim(ClaimTypes.Role, "User"));
             }
+
+            // Define the security key and credentials
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authSettings.Secret));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            // Create and return the JWT token
             var jwt = new JwtSecurityToken(
             issuer: _authSettings.Issuer,
             audience: _authSettings.Audience,
