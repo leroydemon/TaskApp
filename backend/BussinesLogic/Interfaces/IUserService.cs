@@ -1,13 +1,13 @@
 ﻿using BussinesLogic.EntityDtos;
+using Domain.Filters;
 
 namespace BussinesLogic.Interfaces
 {
     public interface IUserService
     {
-        Task<IEnumerable<UserDto>> SearchAsync(List<UserDto> list);
+        Task<IEnumerable<UserDto>> SearchAsync(UserFilter filter);
         Task RemoveAsync(Guid userId);
         Task<UserDto> GetByIdAsync(Guid userId);
         Task<UserDto> UpdateAsync(UserDto user);
-        Task<UserDto> AddAsync(UserDto user);
     }
 }

@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BussinesLogic.EntityDtos;
+using Domain.Entities;
+using Domain.Filters;
 
 namespace BussinesLogic.Interfaces
 {
-    internal interface ITaskToDoService
+    public interface ITaskToDoService
     {
+        Task<IEnumerable<TaskToDoDto>> SearchAsync(TaskToDoFilter filter);
+        Task RemoveAsync(Guid taskId);
+        Task<TaskToDoDto> GetByIdAsync(Guid taskId);
+        Task<TaskToDoDto> UpdateAsync(TaskToDoDto user);
+        Task<TaskToDoDto> AddAsync(TaskToDoDto user);
     }
 }

@@ -1,4 +1,7 @@
-﻿using Domain.Interfaces;
+﻿using Authorization;
+using BussinesLogic.Interfaces;
+using BussinesLogic.Services;
+using Domain.Interfaces;
 using Domain.Repository;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,6 +33,11 @@ namespace Infrastructure.Extentions
                     }
                 }
             }
+
+            services.AddScoped<TokenGeneratorService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITaskToDoService, TaskToDoService>();
 
             return services;
         }

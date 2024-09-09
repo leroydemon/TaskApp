@@ -8,7 +8,7 @@ namespace Infrastructure.MappingProfilies
     {
         public TaskToDoProfile()
         {
-            CreateMap<TaskToDoDto, User>()
+            CreateMap<TaskToDoDto, TaskToDo>()
                 .ReverseMap();
         }
     }
