@@ -12,12 +12,14 @@ namespace Infrastructure.Extentions
 {
     public static class ServiceCollectionExtentions
     {
+        // Extension method to configure and add services to the IServiceCollection
         public static IServiceCollection ServiceCollections(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
 
             services.AddSwaggerGen(options =>
             {
+                // Define the security scheme for Bearer token authentication
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
@@ -28,6 +30,7 @@ namespace Infrastructure.Extentions
                     Scheme = "Bearer"
                 });
 
+                // Add a security requirement for the API
                 options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
@@ -45,16 +48,19 @@ namespace Infrastructure.Extentions
             });
             
             services.AddLogging();
+
+            // Configure FluentValidation for automatic validation
             services.AddFluentValidationAutoValidation();
             services.AddFluentValidationClientsideAdapters();
-            services.AddAutoMapper(typeof(TaskToDoProfile));
             services.AddValidatorsFromAssembly(typeof(TaskToDoDtoValidator).Assembly);
 
+            services.AddAutoMapper(typeof(TaskToDoProfile));
+
+            // Configure Entity Framework Core to use SQL Server with the specified connection string
             services.AddDbContext<TaskAppDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             return services;
         }
-
     }
 }

@@ -2,6 +2,7 @@
 using Domain.Enums;
 using Domain.Filters;
 using Domain.SortableFields;
+using Domain.Specification;
 using System.Linq.Expressions;
 
 namespace Domain.Specialization

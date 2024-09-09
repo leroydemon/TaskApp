@@ -2,8 +2,9 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Domain.Specialization
+namespace Domain.Specification
 {
+    // Abstract base class for implementing specifications
     public abstract class SpecificationBase<T> : SpecificationBase, ISpecification<T>
     {
 
@@ -18,16 +19,19 @@ namespace Domain.Specialization
         public int Skip { get; private set; }
         public bool IsPagingEnabled { get; set; }
 
+        // Adds an include expression for related entities
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
         }
 
+        // Adds an include string for related entities
         protected void AddInclude(string includeString)
         {
             IncludeStrings.Add(includeString);
         }
 
+        // Applies a list of include strings to the specification
         protected void ApplyIncludeList(IEnumerable<string> includes)
         {
             foreach (var include in includes)
@@ -35,6 +39,8 @@ namespace Domain.Specialization
                 AddInclude(include);
             }
         }
+
+        // Applies a list of include expressions to the specification
 
         protected void ApplyIncludeList(IEnumerable<Expression<Func<T, object>>> includes)
         {
@@ -44,6 +50,7 @@ namespace Domain.Specialization
             }
         }
 
+        // Applies a filter expression to the specification
         protected ISpecification<T> ApplyFilter(Expression<Func<T, bool>> expr)
         {
             Criterias.Add(expr);
@@ -51,6 +58,7 @@ namespace Domain.Specialization
             return this;
         }
 
+        // Applies paging to the specification
         protected void ApplyPaging(int skip, int take)
         {
             if (skip < 1)
@@ -62,6 +70,7 @@ namespace Domain.Specialization
             IsPagingEnabled = true;
         }
 
+        // Applies an order-by expression to the specification
         protected void ApplyOrderBy(Expression<Func<T, object>> orderByExpression) =>
             OrderBy = orderByExpression;
 
@@ -72,6 +81,8 @@ namespace Domain.Specialization
             GroupBy = groupByExpression;
 
     }
+
+    // Abstract base class for common specification methods
     public abstract class SpecificationBase
     {
         protected static readonly MethodInfo ToLowerMethod = typeof(string).GetMethod(nameof(string.ToLower), []);

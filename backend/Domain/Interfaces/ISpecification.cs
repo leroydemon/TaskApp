@@ -3,6 +3,7 @@
 
 namespace Domain.Interfaces
 {
+    // Interface representing a specification for querying entities
     public interface ISpecification<T>
     {
         List<Expression<Func<T, bool>>> Criterias { get; }
